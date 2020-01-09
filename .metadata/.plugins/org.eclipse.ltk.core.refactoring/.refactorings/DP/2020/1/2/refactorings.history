@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;B3980_선발명단.java&apos; to &apos;backjoon/src/(default package)&apos;&#x0D;&#x0A;- Original project: &apos;DP&apos;&#x0D;&#x0A;- Destination element: &apos;backjoon/src/(default package)&apos;&#x0D;&#x0A;- Original element: &apos;B3980_선발명단.java&apos;&#x0D;&#x0A;- Update references to refactored element" description="Move compilation unit" destination="=backjoon/src&lt;" element1="/src&lt;{B3980_선발명단.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1578565945678" units="1" version="1.0"/>
+</session>

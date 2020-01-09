@@ -1,0 +1,192 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class B3425_GoStack {
+	static ArrayList<String> orderList;
+	static int[] stack;
+	static int[] refst;
+	static long LIMIT = (long) Math.pow(10, 9);
+	static int top=-1;
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int num=0, n=0;
+		String order="";
+		orderList=new ArrayList<>();
+		stack=new int[11];
+		refst=new int[11];
+		while(true) {
+			top=-1;
+			reftop=-1;
+			orderList.clear();
+			for(;;) {
+				order=sc.next();
+				System.out.println(order);
+				if(order.equals("QUIT")) return;
+				if(order.equals("END")) break;
+
+				if(order.equals("NUM")) {
+					num=sc.nextInt();
+					refpush(num);
+				}
+				else orderList.add(order);
+			}
+			System.out.println(Arrays.toString(refst));
+
+			n=sc.nextInt();
+			for(int i=0; i<n; i++) {
+				stack=refst.clone();
+				top=reftop;
+				num=sc.nextInt();
+				push(num);
+				calc();
+			}
+			//sc.next();
+			System.out.println();
+		}
+
+	}
+	private static void calc() {
+		int a=0, b=0;
+		long res=0;
+		for(String order : orderList) {
+			System.out.println("order:"+order);
+			
+			if(isEmpty()) {
+				System.out.println("ERROR");
+				return;
+			}
+
+			switch (order) {
+			case "POP":
+				pop();
+				break;
+			case "INV":
+				stack[top]=-stack[top];
+				break;
+			case "DUP":
+				push(stack[top]);
+				break;
+			case "SWP":
+				if(!isCal()) {
+					System.out.println("ERROR");
+					return;
+				}
+				int tmp=stack[top];
+				stack[top]=stack[top-1];
+				stack[top-1]=tmp;
+				break;
+			case "ADD":
+				if(!isCal()) {
+					System.out.println("ERROR");
+					return;
+				}
+				a=pop();
+				b=pop();
+				res=(long)a+b;
+				if(Math.abs(res)>LIMIT) {
+					System.out.println("ERROR");
+					return;
+				}
+				push((int)res);
+				break;
+			case "SUB":
+				if(!isCal()) {
+					System.out.println("ERROR");
+					return;
+				}
+				a=pop();
+				b=pop();
+				res=b-a;
+				if(Math.abs(res)>LIMIT) {
+					System.out.println("ERROR");
+					return;
+				}
+				push((int)res);
+				break;
+			case "MUL":
+				if(!isCal()) {
+					System.out.println("ERROR");
+					return;
+				}
+				a=pop();
+				b=pop();
+				res=a*b;
+				if(Math.abs(res)>LIMIT) {
+					System.out.println("ERROR");
+					return;
+				}
+				push((int)res);
+				break;
+			case "DIV":
+				if(!isCal()) {
+					System.out.println("ERROR");
+					return;
+				}
+				a=pop();
+				b=pop();
+				if(a==0) {
+					System.out.println("ERROR");
+					return;
+				}
+				res=(int)Math.abs(b)/Math.abs(a);
+				if(a<0&&b>=0 || a>0&&b<0) res=-res;
+				
+				if(Math.abs(res)>LIMIT) {
+					System.out.println("ERROR");
+					return;
+				}
+				push((int)res);
+				break;
+			case "MOD":
+				if(!isCal()) {
+					System.out.println("ERROR");
+					return;
+				}
+				a=pop();
+				b=pop();
+				if(a==0) {
+					System.out.println("ERROR");
+					return;
+				}
+				res=(int)Math.abs(b)%Math.abs(a);
+				if(b<0) res=-res;
+				
+				if(Math.abs(res)>LIMIT) {
+					System.out.println("ERROR");
+					return;
+				}
+				push((int)res);
+				break;
+			default:
+				break;
+			}
+			
+			System.out.println(Arrays.toString(stack));
+		}
+		if(top!=0) {
+			System.out.println("ERROR");
+			return;
+		}else System.out.println(pop());
+
+	}
+
+	private static boolean isCal() {
+		return top>0;
+	}
+	private static boolean isEmpty() {
+		return top==-1;
+	}
+	private static int pop() {
+		return stack[top--];
+	}
+	private static void push(int num) {
+		stack[++top]=num;
+	}
+	static int reftop=-1;
+	private static void refpush(int num) {
+		refst[++reftop]=num;
+	}
+	
+
+}

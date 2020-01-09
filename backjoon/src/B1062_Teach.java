@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Set;
 
 public class B1062_Teach{
 	static int n,k;
@@ -10,7 +12,6 @@ public class B1062_Teach{
 		Scanner sc = new Scanner(System.in);
 		n=sc.nextInt();
 		k=sc.nextInt();
-		System.out.println("n:"+n+" k:"+k);
 		if(k<5) {
 			System.out.println("0");
 			return;
@@ -21,49 +22,64 @@ public class B1062_Teach{
 		words=new String[n];
 		list=new ArrayList<>();
 		char c='\u0000';
-		for(int i=0; i<n; i++) { //자율주행, 
+		for(int i=0; i<n; i++) {
 			String tmp=sc.next();
 			words[i]=tmp;
 			for(int j=0; j<tmp.length(); j++) {
 				c=tmp.charAt(j);
 				if(!list.contains(c)) list.add(c);
 			}
-			//System.out.println();
 		} 
 		
 		boolean[] visited=new boolean[list.size()];
-		comb(0,visited,0, new ArrayList<Character>());
+		HashMap<Character, Integer> map= new HashMap<>();
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i)=='a' || list.get(i)=='c' || list.get(i)=='i' || list.get(i)=='t' || list.get(i)=='n') {
+				map.put(list.get(i), 1);
+				visited[i]=true;
+			}
+		}
+		
+		
+		comb(0,visited,0, map);
 		System.out.println(answer);
 	}
 	static int answer;
-	private static void comb(int idx, boolean[] visited, int cnt, ArrayList<Character> clist) {
-		if(cnt==k) {
-			for(int i=0; i<clist.size(); i++) System.out.print(clist.get(i));
-			System.out.println();
-			
+	private static void comb(int idx, boolean[] visited, int cnt, HashMap<Character, Integer> map) {
+		//System.out.println("idx:"+idx);
+		if(cnt>k-5) {
+			return;
+		}
+		
+		if(idx==visited.length) {
+			//Set<Character> keyset = map.keySet();
+			//System.out.println(keyset.toString());
 			int res=0;
 			outer:for(int i=0; i<n; i++) {
 				String tmp=words[i];
 				for(int j=0; j<tmp.length(); j++) {
-					if(!clist.contains(tmp.charAt(j))) {
+					if(!map.containsKey(tmp.charAt(j))) {
 						continue outer;
 					}
 				}
-				System.out.println("되는 단어:"+tmp);
 				res++;
 			}
 			answer=Math.max(answer, res);
 			
 			return;
 		}
-		if(idx==visited.length) return;
+		
+		if(visited[idx]) {
+			comb(idx+1, visited, cnt, map);
+			return;
+		}
 		
 		visited[idx]=true;
-		clist.add(list.get(idx));
-		comb(idx+1, visited, cnt+1, clist);
+		map.put(list.get(idx), 1);
+		comb(idx+1, visited, cnt+1, map);
 		visited[idx]=false;
-		clist.remove(clist.size()-1);
-		comb(idx+1, visited, cnt, clist);
+		map.remove(list.get(idx));
+		comb(idx+1, visited, cnt, map);
 		
 	}
 }

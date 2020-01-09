@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;B10251_d&apos; to &apos;B10251_DriveTest&apos;&#x0D;&#x0A;- Original project: &apos;backjoon&apos;&#x0D;&#x0A;- Original element: &apos;B10251_d&apos;&#x0D;&#x0A;- Renamed element: &apos;B10251_DriveTest&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;B10251_d&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;{B10251_d.java[B10251_d" matchStrategy="1" name="B10251_DriveTest" qualified="false" references="true" similarDeclarations="false" stamp="1578447757042" textual="false" version="1.0"/>
+</session>
