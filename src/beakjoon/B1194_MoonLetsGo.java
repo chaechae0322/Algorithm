@@ -31,7 +31,7 @@ public class B1194_MoonLetsGo {
 		N=Integer.parseInt(token.nextToken());
 		M=Integer.parseInt(token.nextToken());
 		map=new char[N][M];
-		visited=new boolean[64][N][M]; //2^6=64 가지 열쇠구성
+		visited=new boolean[64][N][M]; //0 a b c d e f
 		int sx=0, sy=0;
 		for(int i=0; i<N; i++) {
 			map[i]=br.readLine().toCharArray();
@@ -90,7 +90,7 @@ public class B1194_MoonLetsGo {
 					
 					q.add(new Node(tx, ty, -1, tmpList, tmp.cnt+1));
 				}
-				else {
+				else { //map이 .일때
 					q.add(new Node(tx, ty, i, tmpList, tmp.cnt+1));
 				}
 				
@@ -99,7 +99,7 @@ public class B1194_MoonLetsGo {
 				for(int j=0; j<6; j++) {
 					if(tmpList[j]) idx+=Math.pow(2, j);
 				}
-				visited[idx][ty][tx]=true; //visited check
+				visited[idx][ty][tx]=true;
 			}
 			
 		}
