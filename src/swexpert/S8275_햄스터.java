@@ -41,15 +41,11 @@ public class S8275_햄스터 {
 
 			int[] batch = new int[N];
 			ans=new int[N];
+			flag=false;
 			solve(0, batch);
 			
-			boolean isans=false;
-			for(int i=0; i<N; i++)
-				if(ans[i]!=0) {
-					isans=true; break;
-				}
 			
-			if(!isans) {
+			if(!flag) {
 				System.out.println("#"+t+" -1");
 				return;
 			}
@@ -62,6 +58,7 @@ public class S8275_햄스터 {
 
 	}
 	static int[] ans;
+	static boolean flag;
 	static int count;
 	private static void solve(int idx, int[] batch) {
 		//count++;
@@ -92,11 +89,17 @@ public class S8275_햄스터 {
 				cnt+=batch[i];
 			}
 			if(anscnt<cnt) {
+				flag=true;
 				ans = batch.clone();
 			}
 			else if(anscnt==cnt) {
+				System.out.println("batch: "+Arrays.toString(batch));
+				System.out.println("ans: "+Arrays.toString(ans));
 				for(int i=0; i<N; i++) {
+					System.out.println(i);
 					if(batch[i]<ans[i]) {
+						System.out.println("switch");
+						flag=true;
 						ans=batch.clone();
 						break;
 					}
@@ -112,8 +115,5 @@ public class S8275_햄스터 {
 			batch[idx]=i;
 			solve(idx+1, batch);
 		}
-
-
 	}
-
 }
