@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 public class S8275_햄스터 {
 	static int N,X,M;
-	static ArrayList<Record> recordList;
-	static class Record {
+	static ArrayList<Record> recordList;  // 기록 리스트들 여기에 저장한다
+	static class Record {  // 기록 클래스
 		int i, r, s;
 
 		public Record(int i, int r, int s) {
@@ -47,7 +47,7 @@ public class S8275_햄스터 {
 			
 			if(!flag) {
 				System.out.println("#"+t+" -1");
-				return;
+				continue;
 			}
 			
 			System.out.print("#"+t+" ");
@@ -59,12 +59,9 @@ public class S8275_햄스터 {
 	}
 	static int[] ans;
 	static boolean flag;
-	static int count;
 	private static void solve(int idx, int[] batch) {
-		//count++;
-		//if(count>=10) return;
 		
-		if(idx==N) {
+		if(idx==N) { 
 			
 			int cnt=0;
 			for(int i=0; i<M; i++) {
@@ -72,33 +69,30 @@ public class S8275_햄스터 {
 				for(int k=recordList.get(i).i-1; k<=recordList.get(i).r-1; k++) { //i~r
 					cnt+=batch[k];
 				}
-				if(recordList.get(i).s==cnt) { //맞을때 
-					//System.out.println(recordList.get(i).s+" "+cnt);
-					//System.out.println(Arrays.toString(batch));
-					continue;
-				}
-				else {
+				if(recordList.get(i).s!=cnt) { //기록 틀릴때 
 					return;
 				}
 			}
 
 			int anscnt=0;
 			cnt=0;
-			for(int i=0; i<N; i++) {
+			for(int i=0; i<N; i++) {  // 햄스터 갯수세기
 				anscnt+=ans[i];
 				cnt+=batch[i];
 			}
-			if(anscnt<cnt) {
+            if(cnt == 0) {  // 모두 0일때 예외상황  
+				flag=true;
+				ans=batch.clone();
+				return;
+			}
+            
+			if(anscnt<cnt) { // 갯수 더 많으면 ans 바꾸기
 				flag=true;
 				ans = batch.clone();
 			}
-			else if(anscnt==cnt) {
-				System.out.println("batch: "+Arrays.toString(batch));
-				System.out.println("ans: "+Arrays.toString(ans));
+			else if(anscnt==cnt) { // 같으면 자릿수 순서로 비교
 				for(int i=0; i<N; i++) {
-					System.out.println(i);
 					if(batch[i]<ans[i]) {
-						System.out.println("switch");
 						flag=true;
 						ans=batch.clone();
 						break;

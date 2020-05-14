@@ -5,10 +5,10 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Scanner;
 
-public class B1600_말이되고픈원숭이{
+public class B1600_말이되고픈원숭이_opt{
 	static int K,N,M;
 	static int[][] map;
-	static boolean[][][][] check;
+	static boolean[][][] check;
 	static class Node{
 		int x,y,k;
 		int cnt;
@@ -36,7 +36,7 @@ public class B1600_말이되고픈원숭이{
 			}
 		}
 
-		check=new boolean[K+1][12][N][M];
+		check=new boolean[K+1][N][M];
 		/*for(int i=0; i<N; i++)
 			for(int j=0; j<M; j++)
 				for(int k=0; k<8; k++)
@@ -58,8 +58,7 @@ public class B1600_말이되고픈원숭이{
 		Queue<Node> q=new LinkedList<>();
 
 		for(int i=0; i<K+1; i++)
-			for(int j=0; j<12; j++)
-				check[i][j][0][0]=true;
+			check[i][0][0]=true;
 
 		//check[0][0][]=true;
 		//q.add(new Node(0,0,0,0));
@@ -77,7 +76,7 @@ public class B1600_말이되고픈원숭이{
 
 					tx=tmp.x+dxx[i];
 					ty=tmp.y+dyy[i];
-					if(tx<0||ty<0||tx>=M||ty>=N||map[ty][tx]==1||check[tmp.k+1][i][ty][tx]) continue;
+					if(tx<0||ty<0||tx>=M||ty>=N||map[ty][tx]==1||check[tmp.k+1][ty][tx]) continue;
 					
 
 					if(tx==M-1&&ty==N-1) {
@@ -87,7 +86,7 @@ public class B1600_말이되고픈원숭이{
 					}
 
 					q.add(new Node(tx, ty, tmp.k+1, tmp.cnt+1));
-					check[tmp.k+1][i][ty][tx] = true;
+					check[tmp.k+1][ty][tx] = true;
 
 				}
 			}
@@ -97,7 +96,7 @@ public class B1600_말이되고픈원숭이{
 				tx=tmp.x+dx[i];
 				ty=tmp.y+dy[i];
 				System.out.println(tx+" "+ty);
-				if(tx<0||ty<0||tx>=M||ty>=N||check[tmp.k][8+i][ty][tx]) continue;
+				if(tx<0||ty<0||tx>=M||ty>=N||check[tmp.k][ty][tx]) continue;
 				if(map[ty][tx]==1) continue;
 
 				if(tx==M-1&&ty==N-1) {
@@ -107,7 +106,7 @@ public class B1600_말이되고픈원숭이{
 				}
 
 				q.add(new Node(tx, ty, tmp.k, tmp.cnt+1));
-				check[tmp.k][8+i][ty][tx]=true;
+				check[tmp.k][ty][tx]=true;
 			}
 
 		}
