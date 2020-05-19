@@ -7,7 +7,7 @@ public class Level2추석트래픽 {
 
 	public static void main(String[] args) {
 		String[] lines = {
-				"2016-09-15 20:59:57.421 0.351s",
+				/*"2016-09-15 20:59:57.421 0.351s",
 				"2016-09-15 20:59:58.233 1.181s",
 				"2016-09-15 20:59:58.299 0.8s",
 				"2016-09-15 20:59:58.688 1.041s",
@@ -16,7 +16,8 @@ public class Level2추석트래픽 {
 				"2016-09-15 21:00:00.741 1.581s",
 				"2016-09-15 21:00:00.748 2.31s",
 				"2016-09-15 21:00:00.966 0.381s",
-				"2016-09-15 21:00:02.066 2.62s"
+				"2016-09-15 21:00:02.066 2.62s"*/
+				"2016-09-15 01:00:04.001 2.0s", "2016-09-15 01:00:07.000 2s"
 
 		};
 		solution(lines);
@@ -61,9 +62,10 @@ public class Level2추석트래픽 {
 
 		}
 
-
+		System.out.println("point size:"+point.size());
 		
 		for(int i=0; i<point.size(); i++) {
+		//while(!point.isEmpty()) {
 			start = point.poll();
 			ss=(start*1000+1*1000-1)/1000.0;
 			System.out.println("start: "+start+ " ss: "+ss);

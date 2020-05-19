@@ -11,6 +11,7 @@ public class 지형이동 {
 		int[][] land = {
 				{10, 11, 10, 11}, {2, 21, 20, 10}, {1, 20, 21, 11}, {2, 1, 2, 1}
 				//{1, 4, 8, 10}, {5, 5, 5, 5}, {10, 10, 10, 10}, {10, 10, 10, 20}
+				//{2, 1,2,1}, {1, 5, 6, 2}, {8, 4, 7, 20}, {10,10,22,21}
 		};
 		int height = 3;
 		
@@ -22,6 +23,7 @@ public class 지형이동 {
 	static boolean[][] visited;
 	static int[][] gland;
 	static int[][] costgraph;
+	static int id;
 	public static int solution(int[][] land, int height) {
 		int answer = 0;
 		int n = land.length;
@@ -29,11 +31,11 @@ public class 지형이동 {
 		visited = new boolean[n][n];
 		gland = land;
 		
-		int id=1;
+		id=0;
 		for(int i=0; i<n; i++) {
 			for(int j=0; j<n; j++) {
 				if(!visited[i][j]) {
-					bfs(j,i,id++, height);
+					bfs(j,i,++id, height);
 				}
 			}
 		}
@@ -49,14 +51,36 @@ public class 지형이동 {
 		}
 		
 		//
-		costgraph = new int[id][id];
-		for(int i=0; i<id; i++)
+		costgraph = new int[id+1][id+1];
+		for(int i=0; i<=id; i++)
 			Arrays.fill(costgraph[i], Integer.MAX_VALUE);
 		
 		answer = findMinCost();
 		
 		
 		return answer;
+	}
+	
+	static class Node implements Comparable<Node>{
+		int src, dst, cost;
+
+		public Node(int src, int dst, int cost) {
+			super();
+			this.src = src;
+			this.dst = dst;
+			this.cost = cost;
+		}
+
+		@Override
+		public String toString() {
+			return "Node [src=" + src + ", dst=" + dst + ", cost=" + cost + "]";
+		}
+
+		@Override
+		public int compareTo(Node o) {
+			return this.cost - o.cost;
+		}
+		
 	}
 	
 	private static int findMinCost() {
@@ -93,19 +117,30 @@ public class 지형이동 {
 			System.out.println();
 		}
 
-		PriorityQueue<Integer> pq = new PriorityQueue<>();
+		PriorityQueue<Node> pq = new PriorityQueue<>();
 		for(int i=0; i<costgraph.length; i++) {
 			for(int j=i; j<costgraph.length; j++) {
 				if(costgraph[i][j]!=Integer.MAX_VALUE) {
-					pq.add(costgraph[i][j]);
+					pq.add(new Node(i, j, costgraph[i][j]));
 				}
 			}
 		}
 		
 		int res=0;
-		for(int i=0; i<costgraph.length-2; i++) {
-			res += pq.poll();
-			//System.out.println(res);
+		int cnt=0;
+		boolean[] visited = new boolean[id+1];
+		while(!pq.isEmpty()) {
+			Node tmp = pq.poll();
+			System.out.println(tmp.toString());
+			
+			if(!visited[tmp.src] || !visited[tmp.dst]) {
+				res+=tmp.cost;
+				visited[tmp.src] = true;
+				visited[tmp.dst] = true;
+				cnt++;
+				
+				if(cnt == id-1) break;
+			}
 		}
 		return res;
 	}

@@ -91,12 +91,12 @@ public class S1907_모래성쌓기 {
 					
 					if(tx<0||ty<0||tx>=M||ty>=N||visited[ty][tx]) continue;
 		
-					if(map[ty][tx]==0) {
+					if(map[ty][tx]==0) {  // 모래 
 						visited[ty][tx]=true;
 						q.add(new Pos(tx, ty));
 					}
-					else {
-						map[ty][tx]-=1;
+					else {  // 숫자면
+						map[ty][tx]-=1; // 1씩 깎는다.
 						if(map[ty][tx]==0) {
 							tosand.add(new Pos(tx, ty));
 							visited[ty][tx]=true;
