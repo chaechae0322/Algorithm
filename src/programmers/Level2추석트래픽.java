@@ -64,8 +64,8 @@ public class Level2추석트래픽 {
 
 		System.out.println("point size:"+point.size());
 		
-		for(int i=0; i<point.size(); i++) {
-		//while(!point.isEmpty()) {
+		//for(int i=0; i<point.size(); i++) {
+		while(!point.isEmpty()) {
 			start = point.poll();
 			ss=(start*1000+1*1000-1)/1000.0;
 			System.out.println("start: "+start+ " ss: "+ss);
