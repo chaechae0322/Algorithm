@@ -10,6 +10,7 @@ public class nbp3 {
 
 
 	static public int solution(int num, int[] mark) {
+		
         int answer = -1;
         int[] check = new int[mark.length];
         boolean[] visited = new boolean[mark.length];
