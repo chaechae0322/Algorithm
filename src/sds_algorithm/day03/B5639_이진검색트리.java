@@ -13,7 +13,7 @@ public class B5639_이진검색트리 {
 		}
 	}
 	static Node head;
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String input="";
 		int num=0;
@@ -21,45 +21,38 @@ public class B5639_이진검색트리 {
 		Node pos=head;
 		int N=0;
 		//Node parent=head;
-		try {
-			while((input = br.readLine())!=null) {
-				//System.out.println("dd");
+		//try {
+			while((input = br.readLine())!=null && input.length() != 0) {
 				num=Integer.parseInt(input);
 				if(N==0) {
-					pos.left=new Node(num);
-					pos=pos.left;
-					pos.parent=head;
-				}else {
-					if(pos.value>num) {
-						pos.left = new Node(num);
-						pos.left.parent = pos;
-						pos=pos.left;
-						
-						System.out.println("parent:"+pos.parent.value+" pos:"+pos.value);
-					}else {
-						insert(num, pos);
-					}
+					head = new Node(num);
+					N++;
+					continue;
 				}
-				
-				N++;
+				insert(head, num);
 			}
-		} catch (Exception e) {
-
-			/*pos=pos.right;
-			System.out.println(pos.value);
-			pos=pos.right;
-			System.out.println(pos.value);
-			pos=pos.right;
-			System.out.println(pos.left+" "+pos.right);*/
-			postOrderTravers(head.left);
-			return;
-		} 
+		//} catch (Exception e) {
+			//System.out.println(head.left.value);
+			postOrderTravers(head);
+		//	return;
+		//} 
 
 	}
-	private static void insert(int num, Node pos) {
-		if(pos.left==null && pos.right==null) {
-			pos=new Node(num);
-			pos.parent=pos;
+	private static void insert(Node pos, int num) {
+		//System.out.println("insert "+num);
+		if(pos.value > num) {
+			
+			if(pos.left==null) {
+				pos.left=new Node(num);
+			}else {
+				insert(pos.left, num);
+			}
+		}else {
+			if(pos.right==null) {
+				pos.right=new Node(num);
+			}else {
+				insert(pos.right, num);
+			}
 		}
 		
 	}
