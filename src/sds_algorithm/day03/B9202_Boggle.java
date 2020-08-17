@@ -1,5 +1,4 @@
 package sds_algorithm.day03;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -37,25 +36,22 @@ public class B9202_Boggle {
 
 			findmaxScore=0; findcnt=0; findmaxWord="";
 
-			visited=new boolean[4][4];
 			for(int i=0; i<4; i++) {
 				for(int j=0; j<4; j++) {
 					if(root.hasChildren(grid[i][j])) {
 
-						
+						visited=new boolean[4][4];
 						visited[i][j]=true;
 						sb.append(grid[i][j]);
-						System.out.println("start! "+sb.toString());
 						dfs(j, i, sb, 1, root.getChildren(grid[i][j]));
-						visited[i][j]=false;
+
 						sb.delete(0, sb.length());
 					}
 				}
 			}
 			clearHit();
-
-			System.out.println(findmaxScore+" "+findmaxWord+" "+findcnt);
-			br.readLine();
+			 System.out.println(findmaxScore+" "+findmaxWord+" "+findcnt);
+			if(test<N-1) br.readLine();
 		}
 	}
 	static ArrayList<TrieNode> hitList;
@@ -67,9 +63,8 @@ public class B9202_Boggle {
 
 	static int[] dx= {1,1,1,0,-1,-1,-1,0};
 	static int[] dy= {-1,0,1,1,1,0,-1,-1};
-	static int[] score = {0,0,0,1,1,2,3,5,11};
 	private static void dfs(int x, int y, StringBuilder sb, int len, TrieNode node) {
-		System.out.println("x:"+x+" y:"+y+" sb:"+sb.toString());
+		if(len > 8) return;
 		
 		// 목적지 인가
 		if(node.isEnd && !node.isHit) {
@@ -78,7 +73,17 @@ public class B9202_Boggle {
 			findcnt++;
 			String word = sb.toString();
 			
-			findmaxScore += score[word.length()];
+			if(word.length() >= 3 && word.length()<=4) {
+				findmaxScore += 1;
+			}else if(word.length()==5) {
+				findmaxScore += 2;
+			}else if(word.length()==6) {
+				findmaxScore += 3;
+			}else if(word.length()==7) {
+				findmaxScore += 5;
+			}else if(word.length()==8) {
+				findmaxScore += 11;
+			}
 			
 			if(word.length() > findmaxWord.length()) {
 				findmaxWord=word;
@@ -90,8 +95,6 @@ public class B9202_Boggle {
 			
 			hitList.add(node);
 			node.isHit=true;
-			
-			System.out.println(hitList);
 		}
 		
 		// 갈수있는곳 순회
