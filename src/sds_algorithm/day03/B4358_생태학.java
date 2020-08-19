@@ -16,19 +16,6 @@ public class B4358_생태학 {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String input="";
 		head=new TrieNode();
-		
-		System.out.println(" ".length());
-		System.out.println("*".length());
-		System.out.println("[".length());
-		System.out.println("-".length());
-		System.out.println(">".length());
-		System.out.println("^".length());
-		System.out.println("/".length());
-		System.out.println("#".length());
-		System.out.println("%".length());
-		System.out.println("\\".length());
-		//System.out.println('\\');
-		System.out.println("~".length());
 
 		while((input=br.readLine())!=null && input.length()!=0) {
 			//System.out.println(input);
@@ -47,7 +34,7 @@ public class B4358_생태학 {
 			System.out.printf("%s %.4f\n", sb.toString(), percent);
 		}
 		
-		for(int i=0; i<94; i++) {
+		for(int i=0; i<96; i++) {
 			char ch=(char)(i+' ');
 			if(current.hasChild(ch)) {
 				sb.append(ch);
@@ -80,9 +67,8 @@ class TrieNode{
 	char ch;
 	int count;
 	boolean isEnd;
-	TrieNode[] children = new TrieNode[94]; 
-	// 0~25 : 영대문자, 26~51: 영소문자, 52: 띄어쓰기, 53~62: 숫자, 
-	
+	TrieNode[] children = new TrieNode[96]; 
+
 	public boolean hasChild(char ch) {
 		return children[ch-' ']!=null;
 	}

@@ -14,13 +14,13 @@ public class TrieTest {
 }
 
 class Trie{
-	trieNode root = new trieNode();
+	TrieNode root = new TrieNode();
 	void insert(String word) {
-		trieNode current = root;
+		TrieNode current = root;
 		for(int i=0; i<word.length(); i++) {
 			char c = word.charAt(i);
 			if(!current.hasChild(c)) {
-				current.children[c-'A']=new trieNode();
+				current.children[c-'A']=new TrieNode();
 				current = current.getChild(c);
 			}
 		}
@@ -28,7 +28,7 @@ class Trie{
 	}
 	
 	boolean checkWord(String word) {
-		trieNode current = root;
+		TrieNode current = root;
 		for(int i=0; i<word.length(); i++) {
 			char c = word.charAt(i);
 			if(!current.hasChild(c)) return false;
@@ -38,14 +38,15 @@ class Trie{
 		}
 		return current.isEnd;
 	}
+	
+
 }
 
-
-class trieNode{
-	trieNode[] children = new trieNode[26];
+class TrieNode{
+	TrieNode[] children = new TrieNode[26];
 	boolean isEnd;
 	
-	trieNode getChild(char c) {
+	TrieNode getChild(char c) {
 		return children[c-'A'];
 	}
 	

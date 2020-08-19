@@ -40,12 +40,6 @@ public class B1655_가운데를말해요 {
 		//System.out.println(descending.peek());
 		System.out.println(descending.peek());
 		
-		System.out.println("---pq check---");
-		System.out.println(descending);
-		System.out.println(ascending);
-		System.out.println("-----------");
-		System.out.println();
-		
 		for(int i=3; i<=N; i++) {
 			int tmp = Integer.parseInt(br.readLine());
 			
@@ -73,12 +67,6 @@ public class B1655_가운데를말해요 {
 			}else { // 
 				System.out.println(ascending.peek());
 			}
-			
-			System.out.println("---pq check---");
-			System.out.println("작은거: "+descending);
-			System.out.println("큰거: "+ascending);
-			System.out.println("-----------");
-			System.out.println();
 		}
 		
 	}
