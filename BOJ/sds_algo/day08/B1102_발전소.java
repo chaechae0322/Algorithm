@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
-
+/*
+ * 비트필드를 이용한 DP 
+ */
 public class B1102_발전소 {
 	static int N,P;
 	static int cost[][], dp[], visited[];
@@ -41,35 +43,22 @@ public class B1102_발전소 {
 		System.out.println(dp[s]);
 		
 	}
-	//static boolean possible;
 	private static int dfs(int s, int c, int cnt) {
-		System.out.println("s:"+s+" c:"+c);
-		if(cnt==P) {
-			//possible=true;
-			System.out.println("cnt==P");
-			return 0;
-		}
-		
-		if(visited[s]!=0) { System.out.println("dp"); return dp[s]; }
+		if(cnt==P) return 0;
+		if(visited[s]!=0) return dp[s];
 		 
 		visited[s]=1;
 		int res=Integer.MAX_VALUE;
 		for(int i=0; i<N; i++) {
-			System.out.println((1<<i));
-			if((s&(1<<i))==0) {
-				System.out.println((N-i)+"번째 0임");
+			if((s&(1<<i))==0) { // i번째 0
 				for(int j=0; j<N; j++) {
-					System.out.println((1<<j)+" "+(s&(1<<j)));
 					if(i==j) continue;
-					
-					if((s&(1<<j))>0) {
-						System.out.println((N-j)+"번째 1임");
+					if((s&(1<<j))>0) { // j번재 1
 						res=Math.min(res, dfs(s+(1<<i), c+cost[N-1-j][N-1-i], cnt+1)+cost[N-1-j][N-1-i]);
 					}
 				}
 			}
 		}
-		System.out.println(s+"에서 min res:"+res);
 		dp[s]=res;
 		return dp[s];
 	}
