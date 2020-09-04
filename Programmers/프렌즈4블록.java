@@ -1,11 +1,11 @@
-package algo;
+package Programmers;
 
 import java.util.LinkedList;
 import java.util.Queue;
 /*
  * BFS
  */
-public class Pro_프렌즈4블록 {
+public class 프렌즈4블록 {
 
 	public static void main(String[] args) {
 		//System.out.println(solution(4,5, new String[] {"CCBDE", "AAADE", "AAABF", "CCBBF"}));

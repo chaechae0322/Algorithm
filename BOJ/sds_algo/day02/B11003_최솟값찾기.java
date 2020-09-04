@@ -1,4 +1,4 @@
-package algo;
+package BOJ.sds_algo.day02;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
