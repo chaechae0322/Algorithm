@@ -6,98 +6,123 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.StringTokenizer;
-
+/*
+ * DFS
+ * 트리의 지름 v1, v2
+ * v1을 제외하고 트리의지름 d1
+ * v2를 제외하고 트리의지름 d2
+ * max(d1,d2)가 두번째 트리의 지름 
+ */
 public class B19581_두번째트리의지름 {
 	static int N;
-	static long r[][];
+	static Node[] r;
 	static ArrayList<Node>[] g;
 	static class Node{
-		int d, c;
+		int d, l, r;
+		long c;
 
-		public Node(int d, int c) {
+		Node(int d, long c) {
 			super();
 			this.d = d;
 			this.c = c;
 		}
 
-		public int getC() {
-			return c;
-		}
-
-		public void setC(int c) {
+		Node(int d, long c, int l, int r) {
+			super();
+			this.d = d;
 			this.c = c;
+			this.l = l;
+			this.r = r;
 		}
 
 		@Override
 		public String toString() {
-			return "Node [d=" + d + ", c=" + c + "]";
+			return "Node [d=" + d + ", c=" + c + ", l=" + l + ", r=" + r + "]";
 		}
 		
 	}
-	static boolean[] visited;
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer token;// = new StringTokenizer(br.readLine());
 		N=Integer.parseInt(br.readLine());
-		r=new long[N+1][2]; g=new ArrayList[N+1]; visited=new boolean[N+1];
-		for(int i=0; i<=N; i++) g[i]=new ArrayList<Node>();
+		g=new ArrayList[N+1]; r=new Node[N+1];
+		for(int i=0; i<=N; i++) g[i]=new ArrayList<>();
 		String line="";
 		while((line=br.readLine())!=null && line.length()>0) {
-			//System.out.println("ee");
 			token = new StringTokenizer(line);
 			int a=Integer.parseInt(token.nextToken());
 			int b=Integer.parseInt(token.nextToken());
 			int c=Integer.parseInt(token.nextToken());
-			g[a].add(new Node(b, c));
+			g[a].add(new Node(b,c));
 			g[b].add(new Node(a,c));
 		}
-		for(int i=1; i<=N; i++) System.out.println(g[i]);
-		
+		visited=new boolean[N+1];
 		visited[1]=true;
 		dfs(1);
-		long one=0, two=0;
+		int maxv=0;
+		r[0]=new Node(0,0);
 		for(int i=1; i<=N; i++) {
-			for(int j=0; j<2; j++) {
-				System.out.print(r[i][j]+" ");
-				if(r[i][j]>one) {
-					two=one;
-					one=r[i][j];
-				}
-				else if(r[i][j]>two) {
-					two=r[i][j];
-				}
+			System.out.println(r[i]);
+			if(r[i].c>r[maxv].c) {
+				maxv=i;
 			}
-			System.out.println();
 		}
-		System.out.println(two);
-	}
-	private static long[] dfs(int v) {
-		System.out.println("V"+v);
-		long res[]=new long[3], order[][] = new long[3][2];
-		int cnt=0;
-
-		for(int i=0; i<g[v].size(); i++) {
-			Node t= g[v].get(i);
-			if(visited[t.d]) continue;
-			
-			visited[t.d]=true;
-			cnt++;
-			res = dfs(t.d); // go
-			
-			System.out.println("res:"+Arrays.toString(res));
-			for(int j=0; j<3; j++) {
-				if(res[j]<0) continue;
-				if(res[j]+t.c>order[0][0]) {
-					
-				}else if(res[j]+t.c>order[1][0]) {
-					
-				}else if(res[j]+t.c>order[2][0]) {
-					
-				}
+		long ans=0;
+		int v1=r[maxv].l, v2=r[maxv].r;
+		Arrays.fill(visited, false);
+		visited[v1]=true;
+		for(int i=1; i<=N; i++) {
+			if(!visited[i]) {
+				visited[i]=true;
+				dfs(i);
+				break;
 			}
+		}
+		for(int i=1; i<=N; i++) {
+			if(r[i].c>ans) {
+				ans=r[i].c;
+			}
+		}
+		Arrays.fill(visited, false);
+		visited[v2]=true; 
+		for(int i=1; i<=N; i++) {
+			if(!visited[i]) {
+				visited[i]=true;
+				dfs(i);
+				break;
+			}
+		}
+		for(int i=1; i<=N; i++) {
+			if(r[i].c>ans) {
+				ans=r[i].c;
+			}
+		}
+		System.out.println(ans);
+	}
+	static boolean[] visited;
+	private static Node dfs(int v) {
+		long one=0, two=0; int onev=0, twov=0;
+		Node res=null;
+		for(int i=0; i<g[v].size(); i++) {
+			Node tmp=g[v].get(i);
+			if(visited[tmp.d]) continue;
+			visited[tmp.d]=true;
+			res=dfs(tmp.d);
+			if(res.c+tmp.c>one) {
+				two=one;
+				twov=onev;
+				one=res.c+tmp.c;
+				onev=res.d;
+			}else if(res.c+tmp.c>two) {
+				two=res.c+tmp.c; twov=res.d;
+			}
+		}
+		r[v]=new Node(v, one+two,onev, twov==0?v:twov);
+		if(one==0) {
+			return new Node(v,one,0,0);
+		}else {
+			return new Node(onev, one, 0,0);
 		}
 		
-		return new long[] {one, two, three};
 	}
-
 }
