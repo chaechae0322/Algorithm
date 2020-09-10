@@ -3,12 +3,15 @@ package Programmers;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
-
+/*
+ * Binary Tree 만들기
+ */
 public class 길찾기게임 {
 
 	public static void main(String[] args) {
 		int[][] nodeinfo= {
-				{5,3},{11,5},{13,3},{3,5},{6,1},{1,3},{8,6},{7,2},{2,2}
+				//{5,3},{11,5},{13,3},{3,5},{6,1},{1,3},{8,6},{7,2},{2,2}
+				{5,3}
 		};
 		solution(nodeinfo);
 
@@ -60,16 +63,13 @@ public class 길찾기게임 {
         	Node t=pq.poll();
         	maketree(t);
         }
-        for(int i=0; i<=n; i++) System.out.println(i+": "+Arrays.toString(g[i]));
         
-        answer=new int[2][n+1];
+        answer=new int[2][n];
+        idx=0;
         preorder(root.num);
-        System.out.println();
         idx=0;
         postorder(root.num);
         
-        System.out.println(Arrays.toString(answer[0]));
-        System.out.println(Arrays.toString(answer[1]));
         return answer;
     }
 	private static void preorder(int v) {
@@ -83,15 +83,13 @@ public class 길찾기게임 {
 	}
 	private static void postorder(int v) {
 		if(v==-1) return;
-		preorder(g[v][0]);
-		preorder(g[v][1]);
+		postorder(g[v][0]);
+		postorder(g[v][1]);
 		visit(v,1);
 	}
 	private static void maketree(Node t) {
-		System.out.println(t.toString());
 		int cu=root.num;
 		while(true) {
-			System.out.println(cu);
 			if(pos[cu].x>t.x) {
 				if(g[cu][0]==-1) {
 					g[cu][0]=t.num;
