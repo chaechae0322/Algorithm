@@ -93,7 +93,7 @@ public class 후보키 {
 				num+=Math.pow(2, n-i);
 			}
 		}
-		return num;
+		return num; 
 	}
 
 }
