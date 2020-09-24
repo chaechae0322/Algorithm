@@ -11,7 +11,7 @@ public class B1484_다이어트 {
 		int g=sc.nextInt();
 		int l=1, r=g;
 		ArrayList<Integer> ans=new ArrayList<Integer>();
-		while(l<=r) {
+		while(l<r) {
 			long res=l*r;
 			if(res==g) {
 				if((l+r)%2==0) {
