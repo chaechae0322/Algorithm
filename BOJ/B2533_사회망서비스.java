@@ -6,9 +6,12 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.StringTokenizer;
-
+/*
+ * DFS
+ * 
+ */
 public class B2533_사회망서비스 {
-	static int n, cnt, check[]; //blue=짝수, red=홀수
+	static int n, cnt, check[]; 
 	static ArrayList<Integer>[] g;
 	static boolean[] visited;
 	public static void main(String[] args) throws IOException {
@@ -23,9 +26,8 @@ public class B2533_사회망서비스 {
 			int b=Integer.parseInt(token.nextToken());
 			g[a].add(b); g[b].add(a);
 		}
-		visited[1]=true;
+		visited[1]=true; //임의의 루트
 		dfs(1,0);
-		System.out.println(Arrays.toString(check));
 		System.out.println(cnt);
 	}
 	private static void dfs(int pos, int p) {
@@ -38,10 +40,7 @@ public class B2533_사회망서비스 {
 				if(check[g[pos].get(i)]==1) res -= 1;
 			}
 		}
-		if(pos==6)System.out.println(pos+" "+res);
-		if(res>1) {
-			check[pos]=1; cnt++;
-		}else if(res==1 && check[g[pos].get(0)]==0) {
+		if(res>0) {
 			check[pos]=1; cnt++;
 		}
 	}
