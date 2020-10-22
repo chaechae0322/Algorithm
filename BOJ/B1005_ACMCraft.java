@@ -9,6 +9,7 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 /*
  * 위상정럴
+ * 시작점 처음부터 다 넣고 해야한다
  */
 public class B1005_ACMCraft {
 	
@@ -35,22 +36,18 @@ public class B1005_ACMCraft {
 				g[src][dst]=1;
 			}
 			int target = Integer.parseInt(br.readLine());
-			int[] visited = new int[n+1]; Arrays.fill(visited, -1);
-			for(int i=1; i<=n; i++) {
-				if(in[i]==0) {
-					int res = topologicalSort(i, target, visited);
-					if(res>=0) {
-						System.out.println(res);
-						continue loop;
-					}
-				}
-			}
+			System.out.println(topologicalSort(target));
 		}
 	}
-	private static int topologicalSort(int start, int target, int[] visited) {
+	private static int topologicalSort(int target) {
+		int[] visited=new int[n+1];
 		Queue<int[]> q= new LinkedList<int[]>();
-		visited[start]=d[start];
-		q.add(new int[] {start, d[start]});
+		for(int i=1; i<=n; i++) {
+			if(in[i]==0) {
+				visited[i]=d[i];
+				q.add(new int[] {i, d[i]});
+			}
+		}
 		
 		while(!q.isEmpty()) {
 			int[] tmp=q.poll();
